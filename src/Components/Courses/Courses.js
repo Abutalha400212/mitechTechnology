@@ -1,19 +1,16 @@
-import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { Outlet } from 'react-router-dom';
-import LeftSideNav from '../../shared/leftSideBar/LeftSideNav';
-
+import React from "react";
+import { useLoaderData } from "react-router-dom";
+import MainSideOfCourse from "./MainSideOfCourse/MainSideOfCourse";
+import "./Courses.css";
 const Courses = () => {
-    return (
-        <div>
-            <Container>
-            <Row>
-                <Col lg='3'><LeftSideNav/></Col>
-                <Col lg='9'><Outlet/></Col>
-            </Row>
-        </Container>
-        </div>
-    );
+  const data = useLoaderData();
+  return (
+    <div className="grid-style mx-5">
+      {data.map((e) => (
+        <MainSideOfCourse e={e} />
+      ))}
+    </div>
+  );
 };
 
 export default Courses;
