@@ -7,7 +7,7 @@ const Courses = () => {
   return (
     <div className="grid-style mx-5">
       {data.map((e) => (
-        <MainSideOfCourse e={e} />
+        <MainSideOfCourse key={e._id} e={e} />
       ))}
     </div>
   );

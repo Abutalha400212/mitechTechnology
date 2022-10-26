@@ -4,9 +4,12 @@ import router from "./layout/routes";
 import { Toaster } from "react-hot-toast";
 function App() {
   return (
-    <RouterProvider router={router}>
+    <div>
       <Toaster position="top-center" reverseOrder={false} />
+      <RouterProvider router={router}>
+      
     </RouterProvider>
+    </div>
   );
 }
 

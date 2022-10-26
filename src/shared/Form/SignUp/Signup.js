@@ -1,22 +1,23 @@
-import React, { useContext, useRef, useState } from "react";
+import React, {  useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import "./signup.css";
 import { AuthProvider } from "../../../layout/Auth/AuthContext";
+import toast from 'react-hot-toast';
 const Signup = () => {
-  const { createUser } = useContext(AuthProvider);
+  const { createUser, updateUserProfile } = useContext(AuthProvider);
   const [userInfo, setUserInfo] = useState({
     name: "",
     photo: "",
     email: "",
-    password: "",
-    Check: false,
+    password: ""
   });
+  const [checked,setChecked] = useState(false)
 
   const [error, setError] = useState({
     email: "",
     password: "",
+    main:""
   });
   const handleUserEmail = (e) => {
     const email = e.target.value
@@ -52,12 +53,25 @@ const Signup = () => {
       .then((result) => {
         const user = result.user;
         form.reset()
+       updateProfileInformation(userInfo.name,userInfo.photo)
+       .then(()=>{
+        toast.success('Profile update')
+       })
+       .catch(error => console.log(error))
         console.log(user);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  const updateProfileInformation =(name,photo)=>{
+    const profile = {
+        displayName:name,
+        photoURL:photo
+    }
+    updateUserProfile(profile)
+
+  }
 
   return (
     <Form  onSubmit={handleSignUp} className="w-50 mx-auto mt-2">
@@ -106,6 +120,7 @@ const Signup = () => {
       <Form.Group className="mb-2" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
+          onClick={(e)=>setChecked(e.target.checked)}
           label={
             <>
               Accept <Link to="/terms">Terms and conditions</Link>
@@ -117,29 +132,9 @@ const Signup = () => {
         Already have an accout? <Link to="/login">Login</Link>
       </Form.Text>{" "}
       <br />
-      <Button  variant="primary" type="submit">
+      <Button disabled={!checked}  variant="primary" type="submit">
         Sign Up
       </Button>
-      <div className="text-center bg-light">
-        <h4 className="text-muted">SignUp with</h4>
-        <div className="d-flex justify-content-center icon-style">
-          <p className="fw-semibold">
-            <FaGoogle className="icon" />
-            <br />
-            Google
-          </p>
-          <p className="fw-semibold">
-            <FaGithub className="icon" />
-            <br />
-            Github
-          </p>
-          <p className="fw-semibold">
-            <FaFacebook className="icon" />
-            <br />
-            Facebook
-          </p>
-        </div>
-      </div>
     </Form>
   );
 };

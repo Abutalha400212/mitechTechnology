@@ -7,14 +7,14 @@ const Details = () => {
   console.log(techDetails);
   const { title, description, image,id } = techDetails;
   return (
-    <Card style={{ width: "32rem" }} className=' mx-5 my-3'>
+    <Card style={{ width: "24rem" }} className='w-50 mx-auto bg-info'>
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
       </Card.Body>
       <Card.Body>
-        <Link to={`/courses/${id}`}><Button>Back to Previous Page</Button></Link>
+        <Link to={`/discover/${id}`}><Button>Back to Previous Page</Button></Link>
       </Card.Body>
     </Card>
   );

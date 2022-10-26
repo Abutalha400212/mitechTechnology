@@ -5,7 +5,7 @@ import LeftSideNav from '../../shared/leftSideBar/LeftSideNav';
 
 const MainCourse = () => {
     return (
-        <Container className='mt-5'>
+            <Container className='mt-5'>
             <Row>
                 <Col lg='3' className='mb-2'><LeftSideNav/></Col>
                 <Col lg='9'><Outlet/></Col>

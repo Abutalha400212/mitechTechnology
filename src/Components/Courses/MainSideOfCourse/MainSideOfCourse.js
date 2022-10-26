@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Card, Container, Image, Row } from "react-bootstrap";
+import {Card,  Image} from "react-bootstrap";
 import { Link} from "react-router-dom";
 import "./MainSide.css";
 const MainSideOfCourse = ({e}) => {
     const { title, image, _id , description} = e;
   return (
-     <Card style={{ width: "18rem" }}>
+     <Card style={{ width: "18rem" }} bg='info'>
        <Image  variant="top" src={image} />
        <Card.Body>
          <Card.Text>{title}</Card.Text>

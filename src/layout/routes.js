@@ -11,6 +11,7 @@ import Main from "./Main/Main";
 import DataLoaded from "../Components/Courses/MainSideOfCourse/dataLoaded/DataLoaded";
 import MainCourse from "./MainCourse/MainCourse";
 import TermsCondition from "../shared/Others/TermsCondition";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,12 +31,12 @@ const router = createBrowserRouter([
         element: <MainCourse />,
         children: [
           {
-            path: "/courses",
+            path: "/discover",
             loader: () => fetch(`http://localhost:5000/details`),
             element: <Courses />,
           },
           {
-            path: "/courses/:id",
+            path: "/discover/:id",
             loader: ({ params }) =>
               fetch(`http://localhost:5000/courses/${params.id}`),
             element: <DataLoaded />,
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
             path: "/details/:id",
             loader: ({ params }) =>
               fetch(`http://localhost:5000/details/${params.id}`),
-            element: <Details />,
+            element: <PrivateRoute><Details></Details></PrivateRoute>,
           },
         ],
       },
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/blog",
-        element: <Blog />,
+        element: <PrivateRoute><Blog /></PrivateRoute>,
       },
       {
         path: "/login",

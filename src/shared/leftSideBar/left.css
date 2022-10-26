@@ -1,6 +1,7 @@
 .link-style{
-    text-decoration: none;
+    text-decoration: none;  
 }
-.setactive{
-    color: black ;
+.active{
+    background-color: rgb(250, 246, 0);
+    color: azure;
 }
