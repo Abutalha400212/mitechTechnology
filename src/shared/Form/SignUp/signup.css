@@ -1,0 +1,12 @@
+.icon {
+  font-size: 30px;
+}
+.icon:hover {
+  color: blue;
+}
+.icon-style p {
+  margin-left: 10px;
+}
+.wrong::before {
+  color: red;
+}

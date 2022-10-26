@@ -10,6 +10,7 @@ import Error from "./Error/Error";
 import Main from "./Main/Main";
 import DataLoaded from "../Components/Courses/MainSideOfCourse/dataLoaded/DataLoaded";
 import MainCourse from "./MainCourse/MainCourse";
+import TermsCondition from "../shared/Others/TermsCondition";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
       },
+      {
+        path:'terms',
+        element:<TermsCondition/>
+      }
     ],
   },
 ]);
