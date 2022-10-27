@@ -56,7 +56,7 @@ const Login = () => {
       .catch((error) => console.log(error));
   };
   return (
-    <Form onSubmit={handleLoginUser} className={`w-50 mx-auto mt-2`}>
+    <Form onSubmit={handleLoginUser} className='login'>
       <h3 className="fw-bold text-center underline">
         <span className="fs-2 text-primary">Log</span>In
       </h3>

@@ -18,7 +18,7 @@ const Home = () => {
                 <Col lg='7'>
                     <div>
                     <h2 className='fw-bold'>A WORLD OF DIGITAL SOLUTIONS</h2>
-                    <Link to='/discover'><Button>Learn About Courses</Button></Link>
+                    <Link to='/discover'><Button>Learn About Web</Button></Link>
                     </div>
                 </Col>
             </Row>

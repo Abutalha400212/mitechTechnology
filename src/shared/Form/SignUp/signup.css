@@ -14,3 +14,21 @@
   cursor: pointer;
   margin-top: 0;
 }
+.login{
+  width: 90%;
+  margin: auto;
+}
+.signup{
+  width: 90%;
+  margin: auto;
+}
+@media only screen and (min-width: 768px) {
+  .login{
+     width: 50%;
+  margin: 20px auto;
+  }
+  .signup{
+    width: 50%;
+    margin: 20px auto;
+  }
+}

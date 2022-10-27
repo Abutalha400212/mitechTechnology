@@ -76,7 +76,7 @@ const Signup = () => {
   }
 
   return (
-    <Form  onSubmit={handleSignUp} className="w-50 mx-auto mt-2">
+    <Form  onSubmit={handleSignUp} className="signup">
       <h3 className="fw-bold text-center underline lh-1">
         <span className="fs-2 text-primary">Sign</span>Up
       </h3>
