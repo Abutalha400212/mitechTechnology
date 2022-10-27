@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./left.css";
-import { Button } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 const LeftSideNav = () => {
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -16,7 +15,7 @@ const LeftSideNav = () => {
       {category.map((e) => (
         <Link key={e.id} to={`/discover/${e.id}`} className='link-style'>
           <ListGroup>
-            <Button className="mb-2 " variant="outline-primary">
+            <Button id="button"  className={`mb-2`} variant="outline-primary">
               {e.name}
             </Button>
           </ListGroup>
