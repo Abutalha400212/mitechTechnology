@@ -5,7 +5,7 @@ import { Button, ListGroup } from "react-bootstrap";
 const LeftSideNav = () => {
   const [category, setCategory] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/tech")
+    fetch("https://mitech-server.vercel.app/tech")
       .then((res) => res.json())
       .then((data) => setCategory(data));
   }, []);

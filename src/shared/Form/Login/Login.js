@@ -1,4 +1,4 @@
-import { GoogleAuthProvider } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import "../SignUp/signup.css";
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider()
   const { loginExistUser, logInWithPopUp, resetPassword } =
     useContext(AuthProvider);
   const [emailValue, setEmailValue] = useState("");
@@ -19,12 +20,22 @@ const Login = () => {
     logInWithPopUp(googleProvider)
       .then((result) => {
         const user = result.user;
+        toast.success("Logged in successfully")
         console.log(user);
         navigate(from, { replace: true });
       })
       .catch((error) => console.log(error.message));
   };
-
+const handleGithubPopup = ()=>{
+  logInWithPopUp(githubProvider)
+  .then((result) => {
+    const user = result.user;
+    toast.success("Logged in successfully")
+    console.log(user);
+    navigate(from, { replace: true });
+  })
+  .catch((error) => console.log(error.message));
+}
   const handleLoginUser = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -33,6 +44,7 @@ const Login = () => {
     loginExistUser(email, password)
       .then((result) => {
         const user = result.user;
+        toast.success("Logged in successfully")
         console.log(user);
         navigate(from, { replace: true });
       })
@@ -96,7 +108,7 @@ const Login = () => {
             Google
           </p>
           <p className="fw-semibold">
-            <FaGithub className="icon" />
+            <FaGithub onClick={handleGithubPopup} className="icon" />
             <br />
             Github
           </p>

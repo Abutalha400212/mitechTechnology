@@ -33,20 +33,20 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/discover",
-            loader: () => fetch(`http://localhost:5000/details`),
+            loader: () => fetch(`https://mitech-server.vercel.app/details`),
             element: <Courses />,
           },
           {
             path: "/discover/:id",
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/courses/${params.id}`),
+              fetch(`https://mitech-server.vercel.app/courses/${params.id}`),
             element: <DataLoaded />,
           },
           {
             path: "/details/:id", 
             element: <PrivateRoute><Details></Details></PrivateRoute>,
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/details/${params.id}`),
+              fetch(`https://mitech-server.vercel.app/details/${params.id}`),
            
           },
         ],
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
       },
       {
         path:'premium/:id',
-        loader: ({params}) => fetch(`http://localhost:5000/premium/${params.id}`),
+        loader: ({params}) => fetch(`https://mitech-server.vercel.app/premium/${params.id}`),
         element:<PrivateRoute><Premium/></PrivateRoute>
       }
     ],
