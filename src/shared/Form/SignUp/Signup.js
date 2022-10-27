@@ -1,94 +1,78 @@
-import React, {  useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./signup.css";
 import { AuthProvider } from "../../../layout/Auth/AuthContext";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 const Signup = () => {
-  const { createUser, updateUserProfile,emailVerification } = useContext(AuthProvider);
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    photo: "",
-    email: "",
-    password: ""
-  });
-  const [checked,setChecked] = useState(false)
-
-  const [errors, setError] = useState({
-    email: "",
-    password: "",
-    main:""
-  });
-  const handleUserEmail = (e) => {
-    const email = e.target.value
-    if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
-      setError({...errors,email:'Please enter an valid email'})
-      setUserInfo({ ...userInfo, email: e.target.value });
-    }
-    else{
-      setError({...errors,email:''})
-      setUserInfo({ ...userInfo, email: e.target.value });
-
-    }
-    
-  };
-
-  const handleUserPassword = (e) => {
-    const password = e.target.value;
-
-    if (password.length < 8) {
-      setError({...errors, password: 'Password must be minimum 8 characters'})
-      setUserInfo({ ...userInfo, password: e.target.value });
-    }
-    else{
-      setError({...errors,password:''})
-      setUserInfo({ ...userInfo, password: e.target.value });
-    }
-  };
-
+  const { createUser, updateUserProfile, emailVerification } =
+    useContext(AuthProvider);
+  const [userInfo, setUserInfo] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [errors, setError] = useState("");
+  //................Handle Submit User Creation.............//
   const handleSignUp = (e) => {
     e.preventDefault();
     const form = e.target;
-    createUser(userInfo.email, userInfo.password)
+    const name = form.name.value;
+    const photo = form.photo.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
+      setError("Please enter an valid email");
+    } else {
+      setError("");
+    }
+    if (password.length < 8) {
+      setError("Password must be minimum 8 characters");
+    } else {
+      setError("");
+    }
+    createUser(email, password)
       .then((result) => {
         const user = result.user;
         console.log(user);
-        form.reset()
-       updateProfileInformation(userInfo.name,userInfo.photo)
-       
-       .then(()=>{
-        form.reset()
-        toast.success('Profile update')
+        form.reset();
+        setError("");
+        toast.success("Sign up Successfully");
+        updateProfileInformation(name, photo);
         emailVerification()
-        .then(()=> toast.success('Verification email has sent'))
-        .catch(error => console.log(error))
-       })
-       .catch(error =>console.log(error) )
+          .then(() => {
+            toast.success("Verification email has sent");
+          })
+          .catch((error) => console.error(error));
       })
       .catch((error) => {
-        setError({...errors , main: error.message})
-        
+        setError(error.message);
       });
   };
-  const updateProfileInformation =(name,photo)=>{
+  //...................Function Of Update Profile...............//
+  const updateProfileInformation = (name, photo) => {
     const profile = {
-        displayName:name,
-        photoURL:photo
-    }
-    updateUserProfile(profile)
+      displayName: name,
+      photoURL: photo,
+    };
 
-  }
+    updateUserProfile(profile)
+      .then(() => {
+        toast.success("update profile");
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
-    <Form  onSubmit={handleSignUp} className="signup">
+    <Form onSubmit={handleSignUp} className="signup mt-2">
       <h3 className="fw-bold text-center underline lh-1">
         <span className="fs-2 text-primary">Sign</span>Up
       </h3>
       <Form.Group className="mb-2" controlId="formBasicName">
         <Form.Label>Name</Form.Label>
         <Form.Control
-          onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-          value={userInfo.name}
+          name="name"
           type="text"
           placeholder="Enter name"
           required
@@ -97,8 +81,7 @@ const Signup = () => {
       <Form.Group className="mb-2" controlId="formBasicPhoto">
         <Form.Label>Photo URL</Form.Label>
         <Form.Control
-          onChange={(e) => setUserInfo({ ...userInfo, photo: e.target.value })}
-          value={userInfo.photo}
+          name="photo"
           type="text"
           placeholder="Enter Photo Link"
           required
@@ -107,26 +90,20 @@ const Signup = () => {
       <Form.Group className="mb-2" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
-          onChange={handleUserEmail}
+          name="email"
           type="email"
           placeholder="Enter email"
           required
         />
       </Form.Group>
-      {errors.email && <p className="wrong text-danger">{errors.email}</p>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control
-          onChange={handleUserPassword}
-          type="password"
-          placeholder="Password"
-        />
+        <Form.Control name="password" type="password" placeholder="Password" />
       </Form.Group>
-      {errors.password && <p className="wrong text-danger">{errors.password}</p>}
       <Form.Group className="mb-2" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
-          onClick={(e)=>setChecked(e.target.checked)}
+          onClick={(e) => setChecked(e.target.checked)}
           label={
             <>
               Accept <Link to="/terms">Terms and conditions</Link>
@@ -134,16 +111,15 @@ const Signup = () => {
           }
         />
       </Form.Group>
-      {errors.main && <p className="wrong text-danger">{errors.main}</p>}
+      {errors && <p className="wrong text-danger">{errors}</p>}
       <Form.Text className="text-muted">
         Already have an accout? <Link to="/login">Login</Link>
       </Form.Text>{" "}
       <br />
-      <Button disabled={!checked}  variant="primary" type="submit">
+      <Button disabled={!checked} variant="primary" type="submit">
         Sign Up
       </Button>
     </Form>
   );
 };
-
 export default Signup;

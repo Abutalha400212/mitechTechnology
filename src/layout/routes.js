@@ -13,6 +13,7 @@ import MainCourse from "./MainCourse/MainCourse";
 import TermsCondition from "../shared/Others/TermsCondition";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Premium from "../Components/Premium/Premium";
+import Profile from "../Components/Profile/Profile";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,11 +44,14 @@ const router = createBrowserRouter([
             element: <DataLoaded />,
           },
           {
-            path: "/details/:id", 
-            element: <PrivateRoute><Details></Details></PrivateRoute>,
+            path: "/details/:id",
+            element: (
+              <PrivateRoute>
+                <Details></Details>
+              </PrivateRoute>
+            ),
             loader: ({ params }) =>
               fetch(`https://mitech-server.vercel.app/details/${params.id}`),
-           
           },
         ],
       },
@@ -69,14 +73,23 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path:'terms',
-        element:<TermsCondition/>
+        path: "terms",
+        element: <TermsCondition />,
       },
       {
-        path:'premium/:id',
-        loader: ({params}) => fetch(`https://mitech-server.vercel.app/premium/${params.id}`),
-        element:<PrivateRoute><Premium/></PrivateRoute>
-      }
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "premium/:id",
+        loader: ({ params }) =>
+          fetch(`https://mitech-server.vercel.app/premium/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <Premium />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

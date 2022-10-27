@@ -13,9 +13,9 @@ const LeftSideNav = () => {
     <div>
       <h3 className="fw-bold ms-1">Discovers</h3>
       {category.map((e) => (
-        <Link key={e.id} to={`/discover/${e.id}`} className='link-style'>
+        <Link key={e.id} to={`/discover/${e.id}`} className="link-style">
           <ListGroup>
-            <Button id="button"  className={`mb-2`} variant="outline-primary">
+            <Button id="button" className={`mb-2`} variant="outline-primary">
               {e.name}
             </Button>
           </ListGroup>

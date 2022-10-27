@@ -7,35 +7,39 @@ import { AuthProvider } from "../../../layout/Auth/AuthContext";
 import toast from "react-hot-toast";
 import "../SignUp/signup.css";
 const Login = () => {
-  const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider()
   const { loginExistUser, logInWithPopUp, resetPassword } =
     useContext(AuthProvider);
   const [emailValue, setEmailValue] = useState("");
   const [error, setError] = useState("");
+  //..............Navigation Section..............//
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
+  //.............. Google Pop Up Section..........//
+  const googleProvider = new GoogleAuthProvider();
   const handleGooglePopUp = () => {
     logInWithPopUp(googleProvider)
       .then((result) => {
         const user = result.user;
-        toast.success("Logged in successfully")
+        toast.success("Logged in successfully");
         console.log(user);
         navigate(from, { replace: true });
       })
       .catch((error) => console.log(error.message));
   };
-const handleGithubPopup = ()=>{
-  logInWithPopUp(githubProvider)
-  .then((result) => {
-    const user = result.user;
-    toast.success("Logged in successfully")
-    console.log(user);
-    navigate(from, { replace: true });
-  })
-  .catch((error) => console.log(error.message));
-}
+  //.............. Github Pop Up Section..........//
+  const githubProvider = new GithubAuthProvider();
+  const handleGithubPopup = () => {
+    logInWithPopUp(githubProvider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Logged in successfully");
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => console.log(error.message));
+  };
+  //.............. Login With Email Password Section..........//
   const handleLoginUser = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -44,7 +48,7 @@ const handleGithubPopup = ()=>{
     loginExistUser(email, password)
       .then((result) => {
         const user = result.user;
-        toast.success("Logged in successfully")
+        toast.success("Logged in successfully");
         console.log(user);
         navigate(from, { replace: true });
       })
@@ -52,6 +56,7 @@ const handleGithubPopup = ()=>{
         setError(error.message);
       });
   };
+  //.............. Password reset Section..........//
   const handleResetPassword = () => {
     resetPassword(emailValue)
       .then(() => {
@@ -60,7 +65,7 @@ const handleGithubPopup = ()=>{
       .catch((error) => console.log(error));
   };
   return (
-    <Form onSubmit={handleLoginUser} className="login">
+    <Form onSubmit={handleLoginUser} className="login mt-2">
       <h3 className="fw-bold text-center underline">
         <span className="fs-2 text-primary">Log</span>In
       </h3>

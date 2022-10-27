@@ -30,11 +30,11 @@ const MainSideOfCourse = ({ e }) => {
           {proFee}
         </span>
         <span className="text-white">
-        <FaStar />
-        <FaStar />
-        <FaStar />
-        <FaStar />
-        <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaStar />
         </span>
       </div>
       <Link to={`/premium/${_id}`}>
