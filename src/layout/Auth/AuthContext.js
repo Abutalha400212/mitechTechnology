@@ -5,6 +5,8 @@ export const AuthProvider = createContext([]);
 const auth = getAuth(app);
 const AuthContext = ({ children }) => {
     const [user,setUser] = useState({})
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
     const [loading,setLoading] = useState(true)
     const [togggle,setToggle] = useState(false);
   const createUser = (name, password) => {
@@ -34,9 +36,7 @@ const AuthContext = ({ children }) => {
   }
 useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, currentUser =>{
-      if(currentUser === null || currentUser.emailVerified){
         setUser(currentUser);
-    }
         setLoading(false)
     })
     return ()=> unsubscribe()
@@ -49,11 +49,13 @@ useEffect(()=>{
     loginExistUser,
     logInWithPopUp,
     loading,
-    setLoading,
     togggle,
     setToggle,
     resetPassword,
-    emailVerification
+    emailVerification,
+    show,
+    setShow,
+    handleShow
   };
   return (
     <AuthProvider.Provider value={authInfo}>{children}</AuthProvider.Provider>

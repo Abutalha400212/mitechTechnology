@@ -8,13 +8,13 @@ import toast from "react-hot-toast";
 import "../SignUp/signup.css";
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
-  const { loginExistUser, logInWithPopUp, resetPassword,setLoading } =
+  const { loginExistUser, logInWithPopUp, resetPassword } =
     useContext(AuthProvider);
   const [emailValue, setEmailValue] = useState("");
-  console.log(emailValue);
+  const [error, setError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location?.state?.from?.pathName || "/";
+  const from = location?.state?.from?.pathname || "/";
   const handleGooglePopUp = () => {
     logInWithPopUp(googleProvider)
       .then((result) => {
@@ -22,7 +22,7 @@ const Login = () => {
         console.log(user);
         navigate(from, { replace: true });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error.message));
   };
 
   const handleLoginUser = (e) => {
@@ -33,19 +33,11 @@ const Login = () => {
     loginExistUser(email, password)
       .then((result) => {
         const user = result.user;
-        if (user.emailVerified) {
-          navigate(from, { replace: true });
-        } else {
-          toast.error(
-            "Your email is not verified. Please verify your email address."
-          );
-        }
+        console.log(user);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
+        setError(error.message);
       });
   };
   const handleResetPassword = () => {
@@ -56,7 +48,7 @@ const Login = () => {
       .catch((error) => console.log(error));
   };
   return (
-    <Form onSubmit={handleLoginUser} className='login'>
+    <Form onSubmit={handleLoginUser} className="login">
       <h3 className="fw-bold text-center underline">
         <span className="fs-2 text-primary">Log</span>In
       </h3>
@@ -81,6 +73,11 @@ const Login = () => {
         >
           Forgot password?
         </button>
+        {error && (
+          <p className="text-danger">
+            <small>{error}</small>
+          </p>
+        )}
       </Form.Label>
       <br />
       <Form.Text className="text-muted">

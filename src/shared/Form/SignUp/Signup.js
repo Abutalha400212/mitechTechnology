@@ -14,7 +14,7 @@ const Signup = () => {
   });
   const [checked,setChecked] = useState(false)
 
-  const [error, setError] = useState({
+  const [errors, setError] = useState({
     email: "",
     password: "",
     main:""
@@ -22,11 +22,11 @@ const Signup = () => {
   const handleUserEmail = (e) => {
     const email = e.target.value
     if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
-      setError({...error,email:'Please enter an valid email'})
+      setError({...errors,email:'Please enter an valid email'})
       setUserInfo({ ...userInfo, email: e.target.value });
     }
     else{
-      setError({...error,email:''})
+      setError({...errors,email:''})
       setUserInfo({ ...userInfo, email: e.target.value });
 
     }
@@ -37,11 +37,11 @@ const Signup = () => {
     const password = e.target.value;
 
     if (password.length < 8) {
-      setError({...error, password: 'Password must be minimum 8 characters'})
+      setError({...errors, password: 'Password must be minimum 8 characters'})
       setUserInfo({ ...userInfo, password: e.target.value });
     }
     else{
-      setError({...error,password:''})
+      setError({...errors,password:''})
       setUserInfo({ ...userInfo, password: e.target.value });
     }
   };
@@ -52,18 +52,22 @@ const Signup = () => {
     createUser(userInfo.email, userInfo.password)
       .then((result) => {
         const user = result.user;
+        console.log(user);
         form.reset()
        updateProfileInformation(userInfo.name,userInfo.photo)
-       emailVerification().then(()=> toast.success('Verification email has sent'))
+       
        .then(()=>{
-        toast.success('Profile update')
         form.reset()
+        toast.success('Profile update')
+        emailVerification()
+        .then(()=> toast.success('Verification email has sent'))
+        .catch(error => console.log(error))
        })
-       .catch(error => console.log(error))
-        console.log(user);
+       .catch(error =>console.log(error) )
       })
       .catch((error) => {
-        console.log(error);
+        setError({...errors , main: error.message})
+        
       });
   };
   const updateProfileInformation =(name,photo)=>{
@@ -109,7 +113,7 @@ const Signup = () => {
           required
         />
       </Form.Group>
-      {error.email && <p className="wrong text-danger">{error.email}</p>}
+      {errors.email && <p className="wrong text-danger">{errors.email}</p>}
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control
@@ -118,7 +122,7 @@ const Signup = () => {
           placeholder="Password"
         />
       </Form.Group>
-      {error.password && <p className="wrong text-danger">{error.password}</p>}
+      {errors.password && <p className="wrong text-danger">{errors.password}</p>}
       <Form.Group className="mb-2" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
@@ -130,6 +134,7 @@ const Signup = () => {
           }
         />
       </Form.Group>
+      {errors.main && <p className="wrong text-danger">{errors.main}</p>}
       <Form.Text className="text-muted">
         Already have an accout? <Link to="/login">Login</Link>
       </Form.Text>{" "}

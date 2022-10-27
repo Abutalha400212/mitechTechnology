@@ -12,6 +12,7 @@ import DataLoaded from "../Components/Courses/MainSideOfCourse/dataLoaded/DataLo
 import MainCourse from "./MainCourse/MainCourse";
 import TermsCondition from "../shared/Others/TermsCondition";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import Premium from "../Components/Premium/Premium";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
       {
         path:'terms',
         element:<TermsCondition/>
+      },
+      {
+        path:'premium/:id',
+        loader: ({params}) => fetch(`http://localhost:5000/premium/${params.id}`),
+        element:<PrivateRoute><Premium/></PrivateRoute>
       }
     ],
   },
