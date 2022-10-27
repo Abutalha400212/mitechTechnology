@@ -5,7 +5,7 @@ import MainSideOfCourse from "../MainSideOfCourse";
 const DataLoaded = () => {
   const dataLoad = useLoaderData();
   return (
-    <div className="grid-style mx-5">
+    <div className="grid-style" >
       {dataLoad.map((e) => (
         <MainSideOfCourse e={e} />
       ))}

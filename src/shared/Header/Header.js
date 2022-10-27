@@ -37,7 +37,7 @@ const Header = () => {
         <Navbar.Brand>
           <Link className="text-decoration-none" to="/home">
             <Image width={50} className="mb-2" fluid src={logo} />
-            <span className="fs-3 fw-bold">LearnTE&copy;H</span>
+            <span  className="fs-3 fw-bold">LearnTE&copy;H</span>
           </Link>
         </Navbar.Brand>
 

@@ -5,8 +5,8 @@ import "./MainSide.css";
 const MainSideOfCourse = ({e}) => {
     const { title, image, _id , description} = e;
   return (
-     <Card style={{ width: "18rem" }} bg='info'>
-       <Image  variant="top" src={image} />
+     <Card  className="Card" bg="info" >
+       <Image  variant="top" src={image}  />
        <Card.Body>
          <Card.Text>{title}</Card.Text>
          <Card.Text>{

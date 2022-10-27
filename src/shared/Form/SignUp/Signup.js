@@ -5,7 +5,7 @@ import "./signup.css";
 import { AuthProvider } from "../../../layout/Auth/AuthContext";
 import toast from 'react-hot-toast';
 const Signup = () => {
-  const { createUser, updateUserProfile } = useContext(AuthProvider);
+  const { createUser, updateUserProfile,emailVerification } = useContext(AuthProvider);
   const [userInfo, setUserInfo] = useState({
     name: "",
     photo: "",
@@ -54,8 +54,10 @@ const Signup = () => {
         const user = result.user;
         form.reset()
        updateProfileInformation(userInfo.name,userInfo.photo)
+       emailVerification().then(()=> toast.success('Verification email has sent'))
        .then(()=>{
         toast.success('Profile update')
+        form.reset()
        })
        .catch(error => console.log(error))
         console.log(user);

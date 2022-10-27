@@ -1,12 +1,12 @@
-.grid-style{
-    display: grid;
-    grid-template-columns: repeat(3 , 1fr);
-    grid-gap: 10px;
+.grid-style {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+   margin: 0 2rem;
 }
 @media only screen and (max-width: 500px) {
-    .grid-style{
-         display: grid;
-    grid-template-columns: 100px;
-    grid-column-gap: 10px;
-    }
+  .grid-style {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 0;
+  }
 }

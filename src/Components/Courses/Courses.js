@@ -5,7 +5,7 @@ import "./Courses.css";
 const Courses = () => {
   const data = useLoaderData();
   return (
-    <div className="grid-style mx-5">
+    <div className="grid-style">
       {data.map((e) => (
         <MainSideOfCourse key={e._id} e={e} />
       ))}

@@ -8,7 +8,7 @@ const MainCourse = () => {
             <Container className='mt-5'>
             <Row>
                 <Col lg='3' className='mb-2'><LeftSideNav/></Col>
-                <Col lg='9'><Outlet/></Col>
+                <Col lg='9' ><Outlet/></Col>
             </Row>
         </Container>
     );

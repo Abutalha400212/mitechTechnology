@@ -1,15 +1,19 @@
 import { GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../../layout/Auth/AuthContext";
+import toast from "react-hot-toast";
 import "../SignUp/signup.css";
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
-  const { loginExistUser, logInWithPopUp } = useContext(AuthProvider);
+  const { loginExistUser, logInWithPopUp, resetPassword,setLoading } =
+    useContext(AuthProvider);
+  const [emailValue, setEmailValue] = useState("");
+  console.log(emailValue);
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const from = location?.state?.from?.pathName || "/";
   const handleGooglePopUp = () => {
     logInWithPopUp(googleProvider)
@@ -29,9 +33,25 @@ const Login = () => {
     loginExistUser(email, password)
       .then((result) => {
         const user = result.user;
-        navigate(from, { replace: true });
-        form.reset();
-        console.log(user);
+        if (user.emailVerified) {
+          navigate(from, { replace: true });
+        } else {
+          toast.error(
+            "Your email is not verified. Please verify your email address."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  const handleResetPassword = () => {
+    resetPassword(emailValue)
+      .then(() => {
+        toast.success("Password reset email send");
       })
       .catch((error) => console.log(error));
   };
@@ -42,13 +62,27 @@ const Login = () => {
       </h3>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control name="email" type="email" placeholder="Enter email" />
+        <Form.Control
+          onBlur={(event) => setEmailValue(event.target.value)}
+          name="email"
+          type="email"
+          placeholder="Enter email"
+        />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control name="password" type="password" placeholder="Password" />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox"></Form.Group>
+      <Form.Group className="mb-1" controlId="formBasicCheckbox"></Form.Group>
+      <Form.Label>
+        <button
+          onClick={handleResetPassword}
+          className="label-text-alt link link-hover"
+        >
+          Forgot password?
+        </button>
+      </Form.Label>
+      <br />
       <Form.Text className="text-muted">
         Don't have an account? <Link to="/signup">SignUp</Link>
       </Form.Text>

@@ -10,3 +10,7 @@
 .wrong::before {
   color: red;
 }
+.pointer{
+  cursor: pointer;
+  margin-top: 0;
+}
