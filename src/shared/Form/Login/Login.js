@@ -1,4 +1,4 @@
-import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
@@ -31,6 +31,17 @@ const Login = () => {
   const githubProvider = new GithubAuthProvider();
   const handleGithubPopup = () => {
     logInWithPopUp(githubProvider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Logged in successfully");
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => console.log(error.message));
+  };
+  const facebookProvider = new FacebookAuthProvider();
+  const handleFacebook = () => {
+    logInWithPopUp(facebookProvider)
       .then((result) => {
         const user = result.user;
         toast.success("Logged in successfully");
@@ -118,7 +129,7 @@ const Login = () => {
             Github
           </p>
           <p className="fw-semibold">
-            <FaFacebook className="icon" />
+            <FaFacebook onClick={handleFacebook} className="icon" />
             <br />
             Facebook
           </p>

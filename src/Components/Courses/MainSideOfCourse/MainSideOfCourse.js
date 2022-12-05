@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { AuthProvider } from "../../../layout/Auth/AuthContext";
 import "./MainSide.css";
 const MainSideOfCourse = ({ e }) => {
-  const { handleShow } = useContext(AuthProvider);
+  const { setShow } = useContext(AuthProvider);
+  const handleShow = setShow(true)
   const { title, image, _id, description, proFee } = e;
   console.log(e);
   return (

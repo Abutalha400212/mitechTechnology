@@ -16,7 +16,6 @@ const auth = getAuth(app);
 const AuthContext = ({ children }) => {
   const [user, setUser] = useState({});
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
   const [loading, setLoading] = useState(true);
   const [toggle, setToggle] = useState(false);
   //............Create User........//
@@ -74,8 +73,7 @@ const AuthContext = ({ children }) => {
     setToggle,
     resetPassword,
     emailVerification,
-    setShow,
-    handleShow,
+    setShow
   };
   return (
     <AuthProvider.Provider value={authInfo}>{children}</AuthProvider.Provider>
